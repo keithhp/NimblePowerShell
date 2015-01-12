@@ -19,7 +19,7 @@ function Get-NSInitiatorGroup
         [string]
         $Name = "*",
         [Parameter(ValueFromPipeline=$true,Position=0,ParameterSetName="InputObject")]
-        [VolAclRec]
+        [Nimble.VolAclRec]
         $InputObject
     )
 
@@ -309,9 +309,9 @@ function Add-NSInitiatorGroupToVolume
         if($InitiatorGroup.gettype().name -eq "initiatorgrp"){$InitiatorGroup=$InitiatorGroup.name}else{$InitiatorGroup = Get-NSInitiatorGroup $InitiatorGroup | select -ExpandProperty name}
         
         $applyto = switch($Access){
-                    "Both"{[smvolaclapply]::SMvolaclapplytoboth}
-                    "Snapshot"{[smvolaclapply]::SMvolaclapplytosnap}
-                    "Volume"{[smvolaclapply]::SMvolaclapplytovol}
+                    "Both"{[Nimble.smvolaclapply]::SMvolaclapplytoboth}
+                    "Snapshot"{[Nimble.smvolaclapply]::SMvolaclapplytosnap}
+                    "Volume"{[Nimble.smvolaclapply]::SMvolaclapplytovol}
                     }
 
         $rtncode = $Script:NSUnit.addVolAcl($script:sid.value,$Volume,$applyto ,"*",$InitiatorGroup)
@@ -367,9 +367,9 @@ function Remove-NSInitiatorGroupFromVolume
         if($InitiatorGroup.gettype().name -eq "initiatorgrp"){$InitiatorGroup=$InitiatorGroup.name}else{$InitiatorGroup = Get-NSInitiatorGroup $InitiatorGroup | select -ExpandProperty name}
         
         $applyto = switch($Access){
-                    "Both"{[smvolaclapply]::SMvolaclapplytoboth}
-                    "Snapshot"{[smvolaclapply]::SMvolaclapplytosnap}
-                    "Volume"{[smvolaclapply]::SMvolaclapplytovol}
+                    "Both"{[Nimble.smvolaclapply]::SMvolaclapplytoboth}
+                    "Snapshot"{[Nimble.smvolaclapply]::SMvolaclapplytosnap}
+                    "Volume"{[Nimble.smvolaclapply]::SMvolaclapplytovol}
                     }
 
         $rtncode = $Script:NSUnit.removeVolAcl($script:sid.value,$Volume,$applyto ,"*",$InitiatorGroup)
