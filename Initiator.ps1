@@ -30,7 +30,7 @@ function Get-NSInitiatorGroup
         {
             Write-Error "Connect to unit first!" -ErrorAction Stop
         }
-        $igrp = New-Object initiatorgrp
+        $igrp = New-Object Nimble.initiatorgrp
         $rtncode = $Script:NSUnit.getinitiatorgrpList($sid.Value, [ref]$igrp)
         if($rtncode -ne "Smok")
         {
