@@ -11,7 +11,7 @@
 function Get-NSSnapShot
 {
     [CmdletBinding()]
-    [OutputType([snap])]
+    [OutputType([Nimble.snap])]
     Param
     (
         # Param1 help description
@@ -41,7 +41,7 @@ function Get-NSSnapShot
         if($Volume)
         {
             if($Volume.gettype().name -ne "vol"){$Volume=Get-NSVolume -Name $Volume}
-            $snaps = New-Object snap
+            $snaps = New-Object Nimble.snap
             $rtncode = $Script:NSUnit.getSnapList($sid.Value, $Volume.Name, [ref]$snaps)
             if($rtncode -ne "Smok")
             {
@@ -76,7 +76,7 @@ function Get-NSSnapShot
 function New-NSSnapshot
 {
     [CmdletBinding()]
-    [OutputType([snap])]
+    [OutputType([Nimble.snap])]
     Param
     (
         # New name for snapshot
@@ -85,7 +85,7 @@ function New-NSSnapshot
         $Name,
         # volume you'd like to take a snapshot of. This uses a Vol objecct, for pipeline use with other cmdlets
         [Parameter(Mandatory=$true,Position=1,ValueFromPipeLine=$true,ParameterSetName="inobj")]
-        [vol]
+        [Nimble.vol]
         $InputObject,
         # Volume you'd like to take a snapshot of
         [Parameter(Mandatory=$true,Position=1,ParameterSetName="volume")]
@@ -131,7 +131,7 @@ function New-NSSnapshot
                 {
                     $VolumeCollection = $col.name
 
-                    $sppr = new-object snapprotpolrequest
+                    $sppr = new-object Nimble.snapprotpolrequest
                     $sppr.name = $Name
                     if($Description){$sppr.description = $Description}
                     if($Online){$sppr.online=$true}
@@ -165,7 +165,7 @@ function New-NSSnapshot
                 $Volume = Get-NSVolume | ?{$_.name -eq $Volume} | select -ExpandProperty Name
             }
             ##set prop
-            $snapattr = New-Object snapcreateattr
+            $snapattr = New-Object Nimble.snapcreateattr
             $snapattr.name = $Name
             if($Description){$snapattr.description = $Description}
             if($Online){$snapattr.online=$true}
@@ -227,7 +227,7 @@ function Remove-NSSnapShot
                    ValueFromPipeline=$true,
                    ParameterSetName="InputObject",
                    Position=0)]
-        [snap]
+        [Nimble.snap]
         $InputObject,
         
         # Bypass any prompting and just remove it
@@ -305,7 +305,7 @@ function New-NSClone
         [Parameter(Mandatory=$true,
                    ValueFromPipeLine=$true,
                    ParameterSetName="inobj")]
-        [snap]
+        [Nimble.snap]
         $InputObject
 
     )
@@ -343,7 +343,7 @@ function New-NSClone
             Write-Debug "using snap: $Snap"
             Write-Debug "using volume: $volume"
             
-            $attr = new-object VolCreateAttr
+            $attr = new-object Nimble.VolCreateAttr
             $attr.name = $Name
             $attr.size = $volobj.Size
             #vol prop
