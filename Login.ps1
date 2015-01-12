@@ -32,7 +32,7 @@ function Connect-NSArray
                    ValueFromPipelineByPropertyName=$true,
                    Position=2)]
         [string]
-        $PoolName="Default"
+        $PoolName="default"
     )
     
     #save default pool name
