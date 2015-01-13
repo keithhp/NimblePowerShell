@@ -88,7 +88,7 @@ function Add-NSInitiatorToGroup
         foreach($init in $Name)
         {
             $InitiatorGroup = Get-NSInitiatorGroup $InitiatorGroup | select -ExpandProperty name
-            $i = New-Object initiator
+            $i = New-Object Nimble.initiator
             $i.name = $init
             $i.ipaddress = $ip
             $rtncode = $Script:NSUnit.addInitiator($sid.Value,$InitiatorGroup, $i)
@@ -143,7 +143,7 @@ function Remove-NSInitiatorFromGroup
     {
         foreach($init in $Name)
         {
-            $i = New-Object initiator
+            $i = New-Object Nimble.initiator
             $i.name = $init
             $rtncode = $Script:NSUnit.addInitiatort($sid.Value,$InitiatorGroup, $i)
             if($rtncode -ne "Smok")
@@ -192,7 +192,7 @@ function New-NSInitiatorGroup
     {
         foreach($gname in $Name)
         {
-            $g = New-Object InitiatorGrpCreateAttr
+            $g = New-Object Nimble.InitiatorGrpCreateAttr
             $g.name = $gname
             $g.description = $Description
             $rtncode = $Script:NSUnit.CreateInitiatorGrp($sid.Value,$g)
